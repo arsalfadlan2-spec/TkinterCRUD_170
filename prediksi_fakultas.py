@@ -20,10 +20,14 @@ def create_database():
 
 create_database()
 
-def tampilkan_data():
-    for item in tabel.get_children():
-        tabel.delete(item)
+def prediksi_fakultas(biologi, fisika, inggris):
+    if biologi > fisika and biologi > inggris:
+        return "Kedokteran"
+    elif fisika > biologi and fisika > inggris:
+        return "Teknik"
+    elif inggris > biologi and inggris > fisika:
+        return "Bahasa"
+    else:
+        return "Tidak Dapat Ditentukan"
 
-    conn = sqlite3.connect("fakultas.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM fakultas")
+
