@@ -60,7 +60,7 @@ def submit_nilai():
 
 def on_enter(e):
     btn_submit["bg"] = "#050fa7b" 
-    btn_submit["fg"] = "black"
+    btn_submit["fg"] = "blue"
 
 def on_leave(e):
     btn_submit["bg"] = "#044475a" 
