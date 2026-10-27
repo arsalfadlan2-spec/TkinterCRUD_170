@@ -98,4 +98,19 @@ label_ing.pack(pady=(10, 2))
 entry_ing = tk.Entry(root, width=35)
 entry_ing.pack(pady=5)
 
+btn_submit = tk.Button(
+    root, 
+    text="Submit Nilai", 
+    command=submit_nilai, 
+    bg="#44475a", 
+    fg="white", 
+    font=("Arial", 10, "bold"),
+    padx=10, 
+    pady=5
+)
+btn_submit.pack(pady=20)
 
+btn_submit.bind("<Enter>", on_enter)
+btn_submit.bind("<Leave>", on_leave)
+
+root.mainloop()
