@@ -2,23 +2,23 @@ import tkinter as tk
 from tkinter import messagebox
 import sqlite3
 
-def create_database():
-    conn = sqlite3.connect('nilai_siswa.db')
+def create_db():
+    conn = sqlite3.connect("nilai_siswa.db")
     cursor = conn.cursor()
-    cursor.execute('''
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS nilai_siswa (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nama TEXT NOT NULL,
-            biologi integer NOT NULL,
-            fiska integer NOT NULL,
-            inggris integer NOT NULL,
+            nama_siswa TEXT NOT NULL,
+            biologi INTEGER NOT NULL,
+            fisika INTEGER NOT NULL,
+            inggris INTEGER NOT NULL,
             prediksi_fakultas TEXT NOT NULL
         )
-    ''')
+    """)
     conn.commit()
     conn.close()
 
-create_database()
+create_db()
 
 def prediksi_fakultas(biologi, fisika, inggris):
     if biologi > fisika and biologi > inggris:
@@ -31,49 +31,51 @@ def prediksi_fakultas(biologi, fisika, inggris):
         return "Tidak Dapat Ditentukan"
 
 def submit_nilai():
-    class entry_nama:
-        ...
-
     nama = entry_nama.get().strip()
-
     try:
         bio = int(entry_bio.get())
         fis = int(entry_fis.get())
         ing = int(entry_ing.get())
-
     except ValueError:
-        messagebox.showerror(
-            "Error", "Nilai harus berupa angka!"
-        )
+        messagebox.showerror("Error", "Nilai harus berupa angka!")
         return
 
-    if nama == "":
-        messagebox.showerror(
-            "Error", "Nama siswa harus diisi!"
-        )
-        return
-
-    if any(nilai < 0 or nilai > 100 for nilai in [bio, fis, ing]):
-        messagebox.showerror(
-            "Error", "Nilai harus antara 0 sampai 100!"
-        )
-        return
-
-    hasil = prediksi_fakultas(bio, fis, ing)
+    hasil_prediksi = prediksi_fakultas(bio, fis, ing)
 
     conn = sqlite3.connect("nilai_siswa.db")
     cursor = conn.cursor()
-
     cursor.execute("""
-        INSERT INTO nilai_siswa
-        (nama_siswa, biologi, fisika, inggris, prediksi_fakultas)
+        INSERT INTO nilai_siswa (nama_siswa, biologi, fisika, inggris, prediksi_fakultas)
         VALUES (?, ?, ?, ?, ?)
-    """, (nama, bio, fis, ing, hasil))
-
+    """, (nama, bio, fis, ing, hasil_prediksi))
     conn.commit()
     conn.close()
 
-    messagebox.showinfo(
-        "Hasil Prediksi",
-        f"Nama: {nama}\nPrediksi Fakultas: {hasil}"
-    )
+    messagebox.showinfo("Hasil Prediksi", f"Prediksi Fakultas: {hasil_prediksi}")
+
+    entry_nama.delete(0, tk.END)
+    entry_bio.delete(0, tk.END)
+    entry_fis.delete(0, tk.END)
+    entry_ing.delete(0, tk.END)
+
+def on_enter(e):
+    btn_submit["bg"] = "#050fa7b" 
+    btn_submit["fg"] = "black"
+
+def on_leave(e):
+    btn_submit["bg"] = "#044475a" 
+    btn_submit["fg"] = "black"
+
+
+    # Buat elemen entry GUI Tkinter di luar fungsi
+entry_nama = tk.Entry(root)
+entry_nama.pack()
+
+entry_bio = tk.Entry(root)
+entry_bio.pack()
+
+entry_fis = tk.Entry(root)
+entry_fis.pack()
+
+entry_ing = tk.Entry(root)
+entry_ing.pack()
