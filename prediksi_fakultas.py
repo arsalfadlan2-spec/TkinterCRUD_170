@@ -20,3 +20,10 @@ def create_database():
 
 create_database()
 
+def tampilkan_data():
+    for item in tabel.get_children():
+        tabel.delete(item)
+
+    conn = sqlite3.connect("fakultas.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM fakultas")
