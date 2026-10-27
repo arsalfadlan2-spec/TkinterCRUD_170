@@ -1,6 +1,6 @@
+import sqlite3
 import tkinter as tk
 from tkinter import messagebox
-import sqlite3
 
 def create_db():
     conn = sqlite3.connect("nilai_siswa.db")
@@ -18,7 +18,9 @@ def create_db():
     conn.commit()
     conn.close()
 
+
 create_db()
+
 
 def prediksi_fakultas(biologi, fisika, inggris):
     if biologi > fisika and biologi > inggris:
@@ -59,24 +61,41 @@ def submit_nilai():
     entry_ing.delete(0, tk.END)
 
 def on_enter(e):
-    global btn_submit
-    btn_submit["bg"] = "#50fa7b"  # Sesuaikan format warna hex (6 karakter)
+    btn_submit["bg"] = "#50fa7b"
     btn_submit["fg"] = "black"
 
 def on_leave(e):
-    global btn_submit
-    btn_submit["bg"] = "#44475a"  # Sesuaikan format warna hex (6 karakter)
-    btn_submit["fg"] = "black"
+    btn_submit["bg"] = "#44475a"
+    btn_submit["fg"] = "white"
 
-    # Buat elemen entry GUI Tkinter di luar fungsi
-entry_nama = tk.Entry(root)
-entry_nama.pack()
 
-entry_bio = tk.Entry(root)
-entry_bio.pack()
+root = tk.Tk()
+root.title("Sistem Prediksi Fakultas")
+root.geometry("400x450")
+root.configure(bg="#282a36")
 
-entry_fis = tk.Entry(root)
-entry_fis.pack()
 
-entry_ing = tk.Entry(root)
-entry_ing.pack()
+label_nama = tk.Label(root, text="Nama Siswa:", bg="#282a36", fg="white")
+label_nama.pack(pady=(15, 2))
+entry_nama = tk.Entry(root, width=35)
+entry_nama.pack(pady=5)
+
+
+label_bio = tk.Label(root, text="Nilai Biologi:", bg="#282a36", fg="white")
+label_bio.pack(pady=(10, 2))
+entry_bio = tk.Entry(root, width=35)
+entry_bio.pack(pady=5)
+
+
+label_fis = tk.Label(root, text="Nilai Fisika:", bg="#282a36", fg="white")
+label_fis.pack(pady=(10, 2))
+entry_fis = tk.Entry(root, width=35)
+entry_fis.pack(pady=5)
+
+
+label_ing = tk.Label(root, text="Nilai Bahasa Inggris:", bg="#282a36", fg="white")
+label_ing.pack(pady=(10, 2))
+entry_ing = tk.Entry(root, width=35)
+entry_ing.pack(pady=5)
+
+
