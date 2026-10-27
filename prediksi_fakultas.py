@@ -59,13 +59,14 @@ def submit_nilai():
     entry_ing.delete(0, tk.END)
 
 def on_enter(e):
-    btn_submit["bg"] = "#050fa7b" 
-    btn_submit["fg"] = "blue"
-
-def on_leave(e):
-    btn_submit["bg"] = "#044475a" 
+    global btn_submit
+    btn_submit["bg"] = "#50fa7b"  # Sesuaikan format warna hex (6 karakter)
     btn_submit["fg"] = "black"
 
+def on_leave(e):
+    global btn_submit
+    btn_submit["bg"] = "#44475a"  # Sesuaikan format warna hex (6 karakter)
+    btn_submit["fg"] = "black"
 
     # Buat elemen entry GUI Tkinter di luar fungsi
 entry_nama = tk.Entry(root)
