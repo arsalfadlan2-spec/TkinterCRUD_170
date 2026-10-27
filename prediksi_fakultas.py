@@ -1,6 +1,6 @@
-import sqlite3
 import tkinter as tk
 from tkinter import messagebox
+import sqlite3
 
 def create_db():
     conn = sqlite3.connect("nilai_siswa.db")
@@ -18,9 +18,7 @@ def create_db():
     conn.commit()
     conn.close()
 
-
 create_db()
-
 
 def prediksi_fakultas(biologi, fisika, inggris):
     if biologi > fisika and biologi > inggris:
@@ -42,72 +40,54 @@ def submit_nilai():
         messagebox.showerror("Error", "Nilai harus berupa angka!")
         return
 
-    hasil_prediksi = prediksi_fakultas(bio, fis, ing)
+    prediksi = prediksi_fakultas(bio, fis, ing)
 
     conn = sqlite3.connect("nilai_siswa.db")
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO nilai_siswa (nama_siswa, biologi, fisika, inggris, prediksi_fakultas)
         VALUES (?, ?, ?, ?, ?)
-    """, (nama, bio, fis, ing, hasil_prediksi))
+    """, (nama, bio, fis, ing, prediksi))
     conn.commit()
     conn.close()
 
-    messagebox.showinfo("Hasil Prediksi", f"Prediksi Fakultas: {hasil_prediksi}")
-
+    messagebox.showinfo("Success", f"Prediksi Fakultas: {prediksi}")
     entry_nama.delete(0, tk.END)
     entry_bio.delete(0, tk.END)
     entry_fis.delete(0, tk.END)
     entry_ing.delete(0, tk.END)
 
 def on_enter(e):
-    btn_submit["bg"] = "#50fa7b"
+    btn_submit["bg"] = "#050fa7b"
     btn_submit["fg"] = "black"
 
 def on_leave(e):
-    btn_submit["bg"] = "#44475a"
-    btn_submit["fg"] = "white"
+    btn_submit["bg"] = "#044475a"
+    btn_submit["fg"] = "black"
 
+    create_db()
 
 root = tk.Tk()
-root.title("Sistem Prediksi Fakultas")
-root.geometry("400x450")
-root.configure(bg="#282a36")
+root.title("Prediksi Fakultas Siswa")
+root.geometry("400x400")
 
-
-label_nama = tk.Label(root, text="Nama Siswa:", bg="#282a36", fg="white")
-label_nama.pack(pady=(15, 2))
-entry_nama = tk.Entry(root, width=35)
+tk.Label(root, text="Nama Siswa:").pack(pady=5)
+entry_nama = tk.Entry(root, width=30)
 entry_nama.pack(pady=5)
 
-
-label_bio = tk.Label(root, text="Nilai Biologi:", bg="#282a36", fg="white")
-label_bio.pack(pady=(10, 2))
-entry_bio = tk.Entry(root, width=35)
+tk.Label(root, text="Nilai Biologi:").pack(pady=5)
+entry_bio = tk.Entry(root, width=30)
 entry_bio.pack(pady=5)
 
-
-label_fis = tk.Label(root, text="Nilai Fisika:", bg="#282a36", fg="white")
-label_fis.pack(pady=(10, 2))
-entry_fis = tk.Entry(root, width=35)
+tk.Label(root, text="Nilai Fisika:").pack(pady=5)
+entry_fis = tk.Entry(root, width=30)
 entry_fis.pack(pady=5)
 
-
-label_ing = tk.Label(root, text="Nilai Bahasa Inggris:", bg="#282a36", fg="white")
-label_ing.pack(pady=(10, 2))
-entry_ing = tk.Entry(root, width=35)
+tk.Label(root, text="Nilai Bahasa Inggris:").pack(pady=5)
+entry_ing = tk.Entry(root, width=30)
 entry_ing.pack(pady=5)
 
-btn_submit = tk.Button(
-    root, 
-    text="Submit Nilai", 
-    command=submit_nilai, 
-    bg="#44475a", 
-    fg="white", 
-    font=("Arial", 10, "bold"),
-    padx=10, 
-    pady=5
-)
+btn_submit = tk.Button(root, text="Submit Nilai", bg="#0000FF", fg="white", command=submit_nilai)
 btn_submit.pack(pady=20)
 
 btn_submit.bind("<Enter>", on_enter)
